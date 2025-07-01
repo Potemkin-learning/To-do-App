@@ -54,6 +54,5 @@ function refreshList() {
     newElement.querySelector('#list-name').textContent = task;
     // リストdivにli要素を追加
     listDiv.append(newElement);
-    // document.querySelector('#list-div ul').append(newList);
   }
 };

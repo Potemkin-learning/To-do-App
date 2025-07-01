@@ -10,4 +10,5 @@ form.addEventListener('submit', (event) => {
   console.log(newTask);
   tasks.push(newTask);
   console.log(tasks);
+  document.getElementById('task-input').value = '';
 })

@@ -15,12 +15,13 @@ form.addEventListener('submit', (event) => {
     tasks.push(newTask);
     document.getElementById('task-input').value = '';
 
-    // HTMLの更新
+    // HTMLのリストを再描写
     refreshList();
   }
   console.log(tasks); // デバッグ用
 })
 
+// リスト変更時にリストを再描写する関数
 function refreshList() {
   // 既存のリストを初期化
   document.querySelectorAll('#list-div ul').forEach(el => el.remove());

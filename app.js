@@ -3,6 +3,7 @@
 const form = document.getElementById('form-input');
 const listDiv = document.getElementById('list-div');
 
+// { name: タスクの名前, isDone: 完了しているかどうかの真偽値 }
 const tasks = [];
 
 // li要素用テンプレート
@@ -18,12 +19,12 @@ const listHTMLstr = `
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  const newTask = document.getElementById('task-input').value;
-  console.log(newTask); // デバッグ用
+  const newTaskValue = document.getElementById('task-input').value;
+  console.log(newTaskValue); // デバッグ用
 
   // タスク名が空でなければ、tasks配列に追加
-  if (newTask !== '') {
-    tasks.push(newTask);
+  if (newTaskValue !== '') {
+    addTask(newTaskValue);
     document.getElementById('task-input').value = '';
 
     // HTMLのリストを再描写
@@ -33,12 +34,22 @@ form.addEventListener('submit', (event) => {
 })
 
 
+/**
+ * タスク配列に新規タスクを挿入する関数
+ * @param {string} newTaskValue 
+ */
+function addTask(newTaskValue) {
+  tasks.push({name: newTaskValue, isDone: false});
+}
+
+
 // HTML文字列をElementオブジェクトに変換する関数
 function htmlStrToElement(listHTMLstr) {
   const dummyDiv = document.createElement('div');
   dummyDiv.innerHTML = listHTMLstr;
   return dummyDiv.firstElementChild;
 };
+
 
 // リスト変更時にリストを再描写する関数
 function refreshList() {

@@ -13,7 +13,7 @@ const listHTMLstr = `
         <input id="task-complete-button" type="checkbox">
         <span id="list-name"></span>
       </div>
-      <button id="task-delete-button" type="button">タスクを削除する</button>
+      <button id="task-delete-button" type="button">削除</button>
   </li>
 `;
 
@@ -62,7 +62,7 @@ function refreshList() {
   // 配列の数だけリスト要素を作成して挿入
   for (let task of tasks) {
     // 新リスト要素のタスク名テキストを代入
-    newElement.querySelector('#list-name').textContent = task;
+    newElement.querySelector('#list-name').textContent = task.name;
     // リストdivにli要素を追加
     listDiv.append(newElement);
   }

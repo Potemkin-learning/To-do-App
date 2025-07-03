@@ -35,7 +35,7 @@ form.addEventListener('submit', (event) => {
 
 
 /**
- * タスク配列に新規タスクを挿入する関数
+ * タスク配列に新規タスクオブジェクトを挿入する関数
  * @param {string} newTaskValue 
  */
 function addTask(newTaskValue) {

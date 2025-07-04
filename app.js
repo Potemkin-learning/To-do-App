@@ -2,6 +2,8 @@
 
 const form = document.getElementById('form-input');
 const listDiv = document.getElementById('list-div');
+const completedDiv = document.getElementById('completed-list-div');
+
 
 // { name: タスクの名前, isDone: 完了しているかどうかの真偽値 }
 const tasks = [];
@@ -16,19 +18,18 @@ const listHTMLstr = `
       <button class="task-delete-button" type="button">削除</button>
   </li>
 `;
+const templateElement = htmlStrToElement(listHTMLstr);
 
+// 新規タスクが追加されたときの挙動を定義
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const newTaskValue = document.getElementById('task-input').value;
   console.log(`新しいタスクの名前は${newTaskValue}です。`); // デバッグ用
 
-  // タスク名が空でなければ、tasks配列に追加
+  // タスク名が空でなければ、tasks配列に追加し描写
   if (newTaskValue !== '') {
     addTask(newTaskValue);
     document.getElementById('task-input').value = '';
-
-    // HTMLのリストを再描写
-    refreshList();
   }
   console.log(tasks); // デバッグ用
 })
@@ -43,10 +44,11 @@ listDiv.addEventListener('change', (event) => {
     // それと同じIDの配列内のオブジェクトを探す
     // まずfindメソッドで、オブジェクトを取得する
     const targetObj = tasks.find(value => value.id === dataId);
-    console.log(`該当のタスクはは${targetObj}です`);
+    console.log(`該当のタスクは${targetObj}です`);
     // で、そのオブジェクトのisDoneプロパティをtrueに変更する
     targetObj.isDone = true;
-
+    // HTMLのリストを再描写
+    // TODO
     console.log('タスクを完了にしました'); // デバッグ用
   }
 })
@@ -65,13 +67,14 @@ function getNextTaskId() {
 }
 
 /**
- * タスク配列に新規タスクオブジェクトを挿入する関数
+ * タスク配列に新規タスクオブジェクトを挿入した上でHTMLに描写する関数
  * @param {string} newTaskValue 
  */
 function addTask(newTaskValue) {
   const newId = getNextTaskId();
   tasks.push({id: newId, name: newTaskValue, isDone: false});
   console.log(`ID:${newId}のタスクが追加されました。`);
+  displayNewTask(newTaskValue, newId);
 }
 
 // HTML文字列をElementオブジェクトに変換する関数
@@ -81,21 +84,39 @@ function htmlStrToElement(listHTMLstr) {
   return dummyDiv.firstElementChild;
 }
 
-// リスト変更時にリストを再描写する関数
-function refreshList() {
-  // 既存のリストを初期化
-  document.querySelectorAll('#list-div ul').forEach(el => el.remove());
-
-  // ul要素を作成
-  const newElement = htmlStrToElement(listHTMLstr);
-
-  // 配列の数だけリスト要素を作成して挿入
-  for (let task of tasks) {
-    // 新リスト要素のタスク名テキストを代入
-    newElement.querySelector('.list-name').textContent = task.name;
+// 新タスクをhtmlに描写する関数
+function displayNewTask(newTaskValue, newId) {
+  // 新リスト要素のタスク名テキストを代入
+  const newElement = templateElement.cloneNode(true);
+    newElement.querySelector('.list-name').textContent = newTaskValue;
     // 新リスト要素にdata-id属性（＝タスクIDと同一）を追加
-    newElement.setAttribute('data-id', task.id);
+    newElement.setAttribute('data-id', newId);
     // リストdivにli要素を追加
     listDiv.append(newElement);
-  }
 }
+
+
+// タスク完了時にリストにいるタスクを移動させる関数
+//function refreshList() {
+//
+//  // 完了・削除処理の際は既存のリストを初期化
+//  document.querySelectorAll('ul li').forEach(el => el.remove());
+//  
+//
+//  // 配列の数だけリスト要素を作成して挿入
+//  for (let task of tasks) {
+//    // 新リスト要素のタスク名テキストを代入
+//    newElement.querySelector('.list-name').textContent = task.name;
+//    // 新リスト要素にdata-id属性（＝タスクIDと同一）を追加
+//    newElement.setAttribute('data-id', task.id);
+//    // リストdivにli要素を追加
+//    if (task.isDone === false) {
+//      console.log(`タスクのisDoneプロパティは${task.isDone}でした`)
+//      listDiv.append(newElement);
+//    }
+//    else {
+//      console.log(`タスクのisDoneプロパティは${task.isDone}でした`)
+//      completedDiv.append(newElement);
+//    }
+//  }
+//}

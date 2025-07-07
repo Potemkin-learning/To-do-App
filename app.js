@@ -39,7 +39,7 @@ form.addEventListener('submit', (event) => {
 listDiv.addEventListener('change', (event) => {
   if (event.target.checked) {
     const li = event.target.closest('li');
-    // li要素のdata-idを取得
+    // li要素のdata-id値を取得
     const dataId = parseInt(li.dataset.id);
     console.log(`チェックボックスが押されたタスクのdataIdは${dataId}です`);
     // それと同じIDの配列内のオブジェクトを探す

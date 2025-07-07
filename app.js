@@ -38,18 +38,29 @@ form.addEventListener('submit', (event) => {
 // 完了チェックボックスが押された時の挙動を定義
 listDiv.addEventListener('change', (event) => {
   if (event.target.checked) {
-    const li = event.target.closest('li');
+    // const li = event.target.closest('li');
     // li要素のdata-id値を取得
-    const dataId = parseInt(li.dataset.id);
-    console.log(`チェックボックスが押されたタスクのdataIdは${dataId}です`);
+    // const dataId = parseInt(li.dataset.id);
+    // console.log(`チェックボックスが押されたタスクのdataIdは${dataId}です`);
     // それと同じIDの配列内のオブジェクトを探す
     // まずfindメソッドで、オブジェクトを取得する
-    const targetObj = tasks.find(value => value.id === dataId);
-    console.log(`該当のタスクは${targetObj}です`);
+    // const targetObj = tasks.find(value => value.id === dataId);
+    // console.log(`該当のタスクは${targetObj}です`);
     // そのオブジェクトのisDoneプロパティをtrueに変更する
-    targetObj.isDone = true;
+    // targetObj.isDone = true;
     // HTMLのリストを再描写
     // TODO
+    // refreshList()
+
+    // チェックボックスが押されたli要素（チェックボックスから見て親の親）を変数に代入
+    const completedElement = event.target.parentElement.parentElement;
+    // 打ち消し線装飾クラスを設定する
+    completedElement.setAttribute("class", "strikethrough");
+    // 完了タスクdivに移動
+    completedDiv.append(completedElement);
+    
+
+
     console.log('タスクを完了にしました'); // デバッグ用
   }
 })
@@ -97,27 +108,29 @@ function displayNewTask(newTaskValue, newId) {
 }
 
 
-// タスク完了時にリストにいるタスクを移動させる関数
+//タスク完了時にリストにいるタスクを移動させる関数
 //function refreshList() {
-//
-//  // 完了・削除処理の際は既存のリストを初期化
-//  document.querySelectorAll('ul li').forEach(el => el.remove());
-//  
-//
-//  // 配列の数だけリスト要素を作成して挿入
-//  for (let task of tasks) {
-//    // 新リスト要素のタスク名テキストを代入
-//    newElement.querySelector('.list-name').textContent = task.name;
-//    // 新リスト要素にdata-id属性（＝タスクIDと同一）を追加
-//    newElement.setAttribute('data-id', task.id);
-//    // リストdivにli要素を追加
-//    if (task.isDone === false) {
-//      console.log(`タスクのisDoneプロパティは${task.isDone}でした`)
-//      listDiv.append(newElement);
-//    }
-//    else {
-//      console.log(`タスクのisDoneプロパティは${task.isDone}でした`)
-//      completedDiv.append(newElement);
-//    }
-//  }
-//}
+
+  // 完了・削除処理の際は既存のリストを初期化
+  // document.querySelectorAll('ul li').forEach(el => el.remove());
+  
+
+  // 配列の数だけリスト要素を作成して挿入
+  // 新リスト要素のタスク名テキストを代入
+  // for (let task of tasks) {
+  //   newElement.querySelector('.list-name').textContent = task.name;
+  //   // 新リスト要素にdata-id属性（＝タスクIDと同一）を追加
+  //   newElement.setAttribute('data-id', task.id);
+  //   // リストdivにli要素を追加
+  //   if (task.isDone === false) {
+  //     console.log(`タスクのisDoneプロパティは${task.isDone}でした`)
+  //     listDiv.append(newElement);
+  //   }
+  //   else {
+  //     console.log(`タスクのisDoneプロパティは${task.isDone}でした`)
+  //     completedDiv.append(newElement);
+  //   }
+  // }
+
+  
+// }

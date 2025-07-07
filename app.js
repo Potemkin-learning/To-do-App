@@ -37,7 +37,7 @@ form.addEventListener('submit', (event) => {
 })
 
 // 完了チェックボックスが押された時の挙動を定義
-listDiv.addEventListener('change', (event) => {
+listDiv.addEventListener('change', event => {
   if (event.target.checked) {
     // const li = event.target.closest('li');
     // li要素のdata-id値を取得
@@ -54,15 +54,27 @@ listDiv.addEventListener('change', (event) => {
     // refreshList()
 
     // チェックボックスが押されたli要素（チェックボックスから見て親の親）を変数に代入
-    const completedElement = event.target.parentElement.parentElement;
+    const completedElement = event.target.closest("li");
     // 打ち消し線装飾クラスを設定する
     completedElement.setAttribute("class", "strikethrough");
-    // 完了タスクdivに移動
+    // エレメントを完了タスクdivに移動
     completedDiv.append(completedElement);
-    
-
 
     console.log('タスクを完了にしました'); // デバッグ用
+  }
+})
+
+// 完了チェックボックスが解除された時の挙動を定義
+list.addEventListener('change', event => {
+  if (event.target.type === 'checkbox') {
+    if (!event.target.checked) {
+      // チェックボックスが外れたli要素（チェックボックスから見て親の親）を変数に代入
+      const uncheckedElement = event.target.closest("li");
+      // 打ち消し装飾クラスを解除
+      uncheckedElement.removeAttribute("class");
+      // エレメントをTodoディビジョンに移動
+      listDiv.append(uncheckedElement);
+    }
   }
 })
 

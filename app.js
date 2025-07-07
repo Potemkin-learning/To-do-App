@@ -23,10 +23,11 @@ const templateElement = htmlStrToElement(listHTMLstr);
 // 新規タスクが追加されたときの挙動を定義
 form.addEventListener('submit', (event) => {
   event.preventDefault();
+  // インプットフィールドに入力されたタスク名を変数に代入
   const newTaskValue = document.getElementById('task-input').value;
   console.log(`新しいタスクの名前は${newTaskValue}です。`); // デバッグ用
 
-  // タスク名が空でなければ、tasks配列に追加し描写
+  // タスク名が空でなければ、tasks配列に追加しHTMLで描写（addTask関数）、そしてタスク入力フィールドを空にする
   if (newTaskValue !== '') {
     addTask(newTaskValue);
     document.getElementById('task-input').value = '';
@@ -45,7 +46,7 @@ listDiv.addEventListener('change', (event) => {
     // まずfindメソッドで、オブジェクトを取得する
     const targetObj = tasks.find(value => value.id === dataId);
     console.log(`該当のタスクは${targetObj}です`);
-    // で、そのオブジェクトのisDoneプロパティをtrueに変更する
+    // そのオブジェクトのisDoneプロパティをtrueに変更する
     targetObj.isDone = true;
     // HTMLのリストを再描写
     // TODO

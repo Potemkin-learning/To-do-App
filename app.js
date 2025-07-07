@@ -1,5 +1,6 @@
 'use strict';
 
+const list = document.getElementById('list');
 const form = document.getElementById('form-input');
 const listDiv = document.getElementById('list-div');
 const completedDiv = document.getElementById('completed-list-div');
@@ -62,6 +63,13 @@ listDiv.addEventListener('change', (event) => {
 
 
     console.log('タスクを完了にしました'); // デバッグ用
+  }
+})
+
+// 削除ボタンが押された時の挙動を定義
+list.addEventListener('click', (event) => {
+  if (event.target.className === "task-delete-button") {
+    event.target.parentElement.remove();
   }
 })
 

@@ -1,0 +1,9 @@
+body {
+  background-color: rgb(69, 191, 231);
+}
+#list-div {
+    background-color: rgb(155, 205, 223);
+}
+#completed-list-div {
+    background-color: rgb(73, 85, 90);
+}

@@ -7,3 +7,6 @@ body {
 #completed-list-div {
     background-color: rgb(73, 85, 90);
 }
+.strikethrough {
+  text-decoration: line-through;
+}

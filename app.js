@@ -39,15 +39,9 @@ form.addEventListener('submit', (event) => {
 // 完了チェックボックスが押された時の挙動を定義
 listDiv.addEventListener('change', event => {
   if (event.target.checked) {
-    const li = event.target.closest('li');
-    // li要素のdata-id値を取得
-    const dataId = parseInt(li.dataset.id);
-    // それと同じIDのオブジェクトを配列内からfindメソッドを用いて探す
-    // そのオブジェクトの
-    const targetObj = tasks.find(value => value.id === dataId);
-    console.log(`チェックボックスが押されたタスク名は${targetObj.name}、dataIdは${dataId}です`);
+    const checkedTask = getTaksById(event);
     // そのオブジェクトのisDoneプロパティをtrueに変更する
-    targetObj.isDone = true;
+    checkedTask.isDone = true;
     // HTMLのリストを再描写
     // TODO
     // refreshList()
@@ -67,12 +61,17 @@ listDiv.addEventListener('change', event => {
 list.addEventListener('change', event => {
   if (event.target.type === 'checkbox') {
     if (!event.target.checked) {
+      // 該当タスクのオブジェクトのisDoneプロパティをfalseに変更する
+      const uncheckedTask = getTaksById(event);
+      uncheckedTask.isDone = false;
+      console.log(tasks, 'タスクを未完了にしました'); // デバッグ用
+
       // チェックボックスが外れたli要素（チェックボックスから見て親の親）を変数に代入
-      const uncheckedElement = event.target.closest("li");
+      // const uncheckedElement = event.target.closest("li");
       // 打ち消し装飾クラスを解除
-      uncheckedElement.removeAttribute("class");
+      // uncheckedElement.removeAttribute("class");
       // エレメントをTodoディビジョンに移動
-      listDiv.append(uncheckedElement);
+      // listDiv.append(uncheckedElement);
     }
   }
 })
@@ -84,6 +83,17 @@ list.addEventListener('click', (event) => {
   }
 })
 
+// チェックボックス操作がされた要素に紐づくタスクを配列内から探しオブジェクトを返す関数
+function getTaksById(event) {
+  const li = event.target.closest('li');
+  // li要素のdata-id値を取得
+  const dataId = parseInt(li.dataset.id);
+  // それと同じIDのオブジェクトを配列内からfindメソッドを用いて探す
+  const targetObj = tasks.find(value => value.id === dataId);
+  console.log(`チェックボックスが操作されたタスク名は${targetObj.name}、dataIdは${dataId}です`);
+  // 該当タスクのオブジェクトを返す
+  return targetObj;
+}
 
 // 個々のタスクに付与するユニークIDを生成する関数
 function getNextTaskId() {

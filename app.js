@@ -39,7 +39,7 @@ form.addEventListener('submit', (event) => {
 // 完了チェックボックスが押された時の挙動を定義
 listDiv.addEventListener('change', event => {
   if (event.target.checked) {
-    const checkedTask = getTaksById(event);
+    const checkedTask = getTaskById(event);
     // そのオブジェクトのisDoneプロパティをtrueに変更する
     checkedTask.isDone = true;
     // HTMLのリストを再描写
@@ -62,7 +62,7 @@ list.addEventListener('change', event => {
   if (event.target.type === 'checkbox') {
     if (!event.target.checked) {
       // 該当タスクのオブジェクトのisDoneプロパティをfalseに変更する
-      const uncheckedTask = getTaksById(event);
+      const uncheckedTask = getTaskById(event);
       uncheckedTask.isDone = false;
       console.log(tasks, 'タスクを未完了にしました'); // デバッグ用
 
@@ -83,11 +83,19 @@ list.addEventListener('click', (event) => {
   }
 })
 
-// チェックボックス操作がされた要素に紐づくタスクを配列内から探しオブジェクトを返す関数
-function getTaksById(event) {
+// ボタンやチェック操作がされた要素のカスタム属性のID値を返す関数
+function getTaskId(event) {
+  // イベントが発生した要素の祖先で最も近いli要素を取得
   const li = event.target.closest('li');
-  // li要素のdata-id値を取得
+  // そのli要素のdata-id値を取得
   const dataId = parseInt(li.dataset.id);
+  // data-id値を返す
+  return dataId;
+}
+
+// チェックボックス操作がされた要素に紐づくタスクを配列内から探しオブジェクトを返す関数
+function getTaskById(event) {
+  const dataId = getTaskId(event);
   // それと同じIDのオブジェクトを配列内からfindメソッドを用いて探す
   const targetObj = tasks.find(value => value.id === dataId);
   console.log(`チェックボックスが操作されたタスク名は${targetObj.name}、dataIdは${dataId}です`);

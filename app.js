@@ -39,16 +39,15 @@ form.addEventListener('submit', (event) => {
 // 完了チェックボックスが押された時の挙動を定義
 listDiv.addEventListener('change', event => {
   if (event.target.checked) {
-    // const li = event.target.closest('li');
+    const li = event.target.closest('li');
     // li要素のdata-id値を取得
-    // const dataId = parseInt(li.dataset.id);
-    // console.log(`チェックボックスが押されたタスクのdataIdは${dataId}です`);
-    // それと同じIDの配列内のオブジェクトを探す
-    // まずfindメソッドで、オブジェクトを取得する
-    // const targetObj = tasks.find(value => value.id === dataId);
-    // console.log(`該当のタスクは${targetObj}です`);
+    const dataId = parseInt(li.dataset.id);
+    // それと同じIDのオブジェクトを配列内からfindメソッドを用いて探す
+    // そのオブジェクトの
+    const targetObj = tasks.find(value => value.id === dataId);
+    console.log(`チェックボックスが押されたタスク名は${targetObj.name}、dataIdは${dataId}です`);
     // そのオブジェクトのisDoneプロパティをtrueに変更する
-    // targetObj.isDone = true;
+    targetObj.isDone = true;
     // HTMLのリストを再描写
     // TODO
     // refreshList()
@@ -60,7 +59,7 @@ listDiv.addEventListener('change', event => {
     // エレメントを完了タスクdivに移動
     completedDiv.append(completedElement);
 
-    console.log('タスクを完了にしました'); // デバッグ用
+    console.log(tasks, 'タスクを完了にしました'); // デバッグ用
   }
 })
 

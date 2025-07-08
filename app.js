@@ -28,7 +28,7 @@ form.addEventListener('submit', (event) => {
   const newTaskValue = document.getElementById('task-input').value;
   console.log(`新しいタスクの名前は${newTaskValue}です。`); // デバッグ用
 
-  // タスク名が空でなければ、tasks配列に追加しHTMLで描写（addTask関数）、そしてタスク入力フィールドを空にする
+  // タスク名が空でなければ、tasks配列に追加し、タスク入力フィールドを空にする
   if (newTaskValue !== '') {
     addTask(newTaskValue);
     document.getElementById('task-input').value = '';
@@ -47,11 +47,11 @@ listDiv.addEventListener('change', event => {
     // refreshList()
 
     // チェックボックスが押されたli要素（チェックボックスから見て親の親）を変数に代入
-    const completedElement = event.target.closest("li");
+    // const completedElement = event.target.closest("li");
     // 打ち消し線装飾クラスを設定する
-    completedElement.setAttribute("class", "strikethrough");
+    // completedElement.setAttribute("class", "strikethrough");
     // エレメントを完了タスクdivに移動
-    completedDiv.append(completedElement);
+    // completedDiv.append(completedElement);
 
     console.log(tasks, 'タスクを完了にしました'); // デバッグ用
   }
@@ -119,14 +119,14 @@ function getNextTaskId() {
 }
 
 /**
- * タスク配列に新規タスクオブジェクトを挿入した上でHTMLに描写する関数
+ * タスク配列に新規タスクオブジェクトを挿入する関数
  * @param {string} newTaskValue 
  */
 function addTask(newTaskValue) {
   const newId = getNextTaskId();
   tasks.push({id: newId, name: newTaskValue, isDone: false});
   console.log(`ID:${newId}のタスクが追加されました。`);
-  displayNewTask(newTaskValue, newId);
+  // displayNewTask(newTaskValue, newId);
 }
 
 // HTML文字列をElementオブジェクトに変換する関数

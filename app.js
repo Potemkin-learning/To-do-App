@@ -79,7 +79,10 @@ list.addEventListener('change', event => {
 // 削除ボタンが押された時の挙動を定義
 list.addEventListener('click', (event) => {
   if (event.target.className === "task-delete-button") {
-    event.target.parentElement.remove();
+    // オブジェクトのインデックスは、IDから1を引いたもの
+    const deletionIndex = getTaskId(event) - 1;
+    tasks.splice(deletionIndex, 1);
+    console.log(tasks, `タスクを削除しました`); // デバッグ用
   }
 })
 

@@ -34,6 +34,7 @@ form.addEventListener('submit', (event) => {
     document.getElementById('task-input').value = '';
   }
   console.log(tasks); // デバッグ用
+  refreshHTML(); // HTMLの再描写
 })
 
 // 完了チェックボックスが押された時の挙動を定義
@@ -54,6 +55,7 @@ listDiv.addEventListener('change', event => {
     // completedDiv.append(completedElement);
 
     console.log(tasks, 'タスクを完了にしました'); // デバッグ用
+    refreshHTML(); // HTMLの再描写
   }
 })
 
@@ -72,6 +74,7 @@ list.addEventListener('change', event => {
       // uncheckedElement.removeAttribute("class");
       // エレメントをTodoディビジョンに移動
       // listDiv.append(uncheckedElement);
+      refreshHTML(); // HTMLの再描写
     }
   }
 })
@@ -83,6 +86,7 @@ list.addEventListener('click', (event) => {
     const deletionIndex = getTaskId(event) - 1;
     tasks.splice(deletionIndex, 1);
     console.log(tasks, `タスクを削除しました`); // デバッグ用
+    refreshHTML(); // HTMLの再描写
   }
 })
 

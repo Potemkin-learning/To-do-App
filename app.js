@@ -6,7 +6,7 @@ const listDiv = document.getElementById('list-div');
 const completedDiv = document.getElementById('completed-list-div');
 
 
-// { name: タスクの名前, isDone: 完了しているかどうかの真偽値 }
+// { id: タスクの一意の識別子, name: タスクの名前, isDone: 完了しているかどうかの真偽値 }
 const tasks = [];
 
 // li要素用テンプレート
@@ -145,6 +145,39 @@ function displayNewTask(newTaskValue, newId) {
     newElement.setAttribute('data-id', newId);
     // リストdivにli要素を追加
     listDiv.append(newElement);
+}
+
+// HTMLを再描写する関数
+function refreshHTML() {
+  // 既存タスク表示を一旦全削除
+  document.querySelectorAll('ul li').forEach(el => el.remove());
+
+  // プロパティisDone　＝　false　のタスクを list-divに描写
+  for (const task of tasks) {
+    const newElement = cloneHtml(task);
+    if (task.isDone === false) {
+      // HTMLのタスク一覧divに表示させる
+      listDiv.append(newElement);
+    }
+    else {
+      // HTMLの完了タスク表示divに表示させる
+      completedDiv.append(newElement);
+    }
+  }
+}
+
+/**
+ * liテンプレートをクローンして、タスク名とカスタム属性を設定したliオブジェクトを返する関数
+ * @param {Object} task - タスクオブジェクト
+ * @returns {Element} - クローンされたli要素
+ */
+function cloneHtml(task) {
+  // li要素をクローン
+  const newElement = templateElement.cloneNode(true);
+  // クローンしたエレメントにタスク名とカスタムID属性を設定
+  newElement.querySelector('.list-name').textContent = task.name;
+  newElement.setAttribute('data-id', task.id);
+  return newElement;
 }
 
 

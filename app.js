@@ -7,7 +7,7 @@ const completedDiv = document.getElementById('completed-list-div');
 
 
 // { id: タスクの一意の識別子, name: タスクの名前, isDone: 完了しているかどうかの真偽値 }
-const tasks = [];
+let tasks = [];
 
 // li要素用テンプレート
 const listHTMLstr = `
@@ -160,4 +160,20 @@ function cloneHtml(task) {
   newElement.querySelector('.list-name').textContent = task.name;
   newElement.setAttribute('data-id', task.id);
   return newElement;
+}
+
+// タスクデータをlocalStorageに保存する関数
+function saveToLocalStorage() {
+  const json = JSON.stringify(tasks);
+  localStorage.setItem("data", json);
+}
+
+// タスクデータをlocalStorageから読み込む関数
+function loadFromLocalStorage() {
+  const data = localStorage.getItem("data");
+
+  // localStorageのデータがNULLでなければ、配列tasksに再代入（上書き）
+  if (data !== NULL) {
+  tasks = JSON.parse(data);
+  }
 }

@@ -160,12 +160,16 @@ function refreshHTML() {
   for (const task of tasks) {
     const newElement = cloneHtml(task);
     if (task.isDone === false) {
+      // 未完了タスクへの処理
       // HTMLのタスク一覧divに表示させる
       listDiv.append(newElement);
     }
     else {
-      //完了タスクのチェックボックスをchecked状態にする
+      // 完了タスクへの処理
+      // チェックボックスをchecked状態にする
       newElement.querySelector(".task-complete-button").checked = true;
+      // タスク名が入っているspan要素に打ち消し装飾クラスを追加する
+      newElement.querySelector(".list-name").classList.add("strikethrough");
       // HTMLの完了タスク表示divに表示させる
       completedDiv.append(newElement);
     }

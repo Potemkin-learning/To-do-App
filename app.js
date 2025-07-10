@@ -141,15 +141,15 @@ function htmlStrToElement(listHTMLstr) {
 }
 
 // 新タスクをhtmlに描写する関数
-function displayNewTask(newTaskValue, newId) {
-  // 新リスト要素のタスク名テキストを代入
-  const newElement = templateElement.cloneNode(true);
-    newElement.querySelector('.list-name').textContent = newTaskValue;
-    // 新リスト要素にdata-id属性（＝タスクIDと同一）を追加
-    newElement.setAttribute('data-id', newId);
-    // リストdivにli要素を追加
-    listDiv.append(newElement);
-}
+//function displayNewTask(newTaskValue, newId) {
+//  // 新リスト要素のタスク名テキストを代入
+//  const newElement = templateElement.cloneNode(true);
+//    newElement.querySelector('.list-name').textContent = newTaskValue;
+//    // 新リスト要素にdata-id属性（＝タスクIDと同一）を追加
+//    newElement.setAttribute('data-id', newId);
+//    // リストdivにli要素を追加
+//    listDiv.append(newElement);
+//}
 
 // HTMLを再描写する関数
 function refreshHTML() {
@@ -164,6 +164,8 @@ function refreshHTML() {
       listDiv.append(newElement);
     }
     else {
+      //完了タスクのチェックボックスをchecked状態にする
+      newElement.querySelector(".task-complete-button").checked = true;
       // HTMLの完了タスク表示divに表示させる
       completedDiv.append(newElement);
     }

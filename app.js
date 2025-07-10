@@ -125,6 +125,8 @@ function htmlStrToElement(listHTMLstr) {
 
 // HTMLを再描写する関数
 function refreshHTML() {
+  // タスクをローカルストレージに保存（データ永続化）
+  saveToLocalStorage();
   // 既存タスク表示を一旦全削除
   document.querySelectorAll('ul li').forEach(el => el.remove());
 

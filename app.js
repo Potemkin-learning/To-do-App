@@ -5,10 +5,6 @@ const form = document.getElementById('form-input');
 const listDiv = document.getElementById('list-div');
 const completedDiv = document.getElementById('completed-list-div');
 
-
-// { id: タスクの一意の識別子, name: タスクの名前, isDone: 完了しているかどうかの真偽値 }
-let tasks = [];
-
 // li要素用テンプレート
 const listHTMLstr = `
   <li>
@@ -21,12 +17,19 @@ const listHTMLstr = `
 `;
 const templateElement = htmlStrToElement(listHTMLstr);
 
+
+// { id: タスクの一意の識別子, name: タスクの名前, isDone: 完了しているかどうかの真偽値 }
+let tasks = [];
+
+// 初回アプリ起動時の処理
+loadFromLocalStorage();
+
 // 新規タスクが追加されたときの挙動を定義
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   // インプットフィールドに入力されたタスク名を変数に代入
   const newTaskValue = document.getElementById('task-input').value;
-  console.log(`新しいタスクの名前は${newTaskValue}です。`); // デバッグ用
+  console.log(`新しいタスクの名前は"${newTaskValue}"です。`); // デバッグ用
 
   // タスク名が空でなければ、tasks配列に追加・タスク入力フィールドを空にし、HTML再描写
   if (newTaskValue !== '') {
@@ -170,12 +173,16 @@ function saveToLocalStorage() {
   localStorage.setItem("todoTasks", json);
 }
 
-// タスクデータをlocalStorageから読み込む関数
+// 初回起動時、タスクデータをlocalStorageから読み込む関数
 function loadFromLocalStorage() {
   const data = localStorage.getItem("todoTasks");
 
   // localStorageのデータがNULLでなければ、配列tasksに再代入（上書き）
-  if (data !== NULL) {
+  if (data) {
   tasks = JSON.parse(data);
+  refreshHTML();
+  console.log('localStorageからタスクを読み込みました', tasks);
+  } else {
+    console.log('localStorageにデータが見つかりませんでした');
   }
 }

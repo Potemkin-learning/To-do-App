@@ -28,13 +28,13 @@ form.addEventListener('submit', (event) => {
   const newTaskValue = document.getElementById('task-input').value;
   console.log(`新しいタスクの名前は${newTaskValue}です。`); // デバッグ用
 
-  // タスク名が空でなければ、tasks配列に追加し、タスク入力フィールドを空にする
+  // タスク名が空でなければ、tasks配列に追加・タスク入力フィールドを空にし、HTML再描写
   if (newTaskValue !== '') {
     addTask(newTaskValue);
     document.getElementById('task-input').value = '';
+    refreshHTML(); // HTMLの再描写
+    console.log(tasks, '新規タスクを追加しました'); // デバッグ用
   }
-  console.log(tasks); // デバッグ用
-  refreshHTML(); // HTMLの再描写
 })
 
 // 完了チェックボックスが押された時の挙動を定義
@@ -43,19 +43,8 @@ listDiv.addEventListener('change', event => {
     const checkedTask = getTaskById(event);
     // そのオブジェクトのisDoneプロパティをtrueに変更する
     checkedTask.isDone = true;
-    // HTMLのリストを再描写
-    // TODO
-    // refreshList()
-
-    // チェックボックスが押されたli要素（チェックボックスから見て親の親）を変数に代入
-    // const completedElement = event.target.closest("li");
-    // 打ち消し線装飾クラスを設定する
-    // completedElement.setAttribute("class", "strikethrough");
-    // エレメントを完了タスクdivに移動
-    // completedDiv.append(completedElement);
-
-    console.log(tasks, 'タスクを完了にしました'); // デバッグ用
     refreshHTML(); // HTMLの再描写
+    console.log(tasks, 'タスクを完了にしました'); // デバッグ用
   }
 })
 
@@ -67,13 +56,6 @@ list.addEventListener('change', event => {
       const uncheckedTask = getTaskById(event);
       uncheckedTask.isDone = false;
       console.log(tasks, 'タスクを未完了にしました'); // デバッグ用
-
-      // チェックボックスが外れたli要素（チェックボックスから見て親の親）を変数に代入
-      // const uncheckedElement = event.target.closest("li");
-      // 打ち消し装飾クラスを解除
-      // uncheckedElement.removeAttribute("class");
-      // エレメントをTodoディビジョンに移動
-      // listDiv.append(uncheckedElement);
       refreshHTML(); // HTMLの再描写
     }
   }
@@ -84,6 +66,7 @@ list.addEventListener('click', (event) => {
   if (event.target.className === "task-delete-button") {
     // オブジェクトのインデックスは、IDから1を引いたもの
     const deletionIndex = getTaskId(event) - 1;
+    // タスク配列から該当タスクを削除する
     tasks.splice(deletionIndex, 1);
     console.log(tasks, `タスクを削除しました`); // デバッグ用
     refreshHTML(); // HTMLの再描写
@@ -140,17 +123,6 @@ function htmlStrToElement(listHTMLstr) {
   return dummyDiv.firstElementChild;
 }
 
-// 新タスクをhtmlに描写する関数
-//function displayNewTask(newTaskValue, newId) {
-//  // 新リスト要素のタスク名テキストを代入
-//  const newElement = templateElement.cloneNode(true);
-//    newElement.querySelector('.list-name').textContent = newTaskValue;
-//    // 新リスト要素にdata-id属性（＝タスクIDと同一）を追加
-//    newElement.setAttribute('data-id', newId);
-//    // リストdivにli要素を追加
-//    listDiv.append(newElement);
-//}
-
 // HTMLを再描写する関数
 function refreshHTML() {
   // 既存タスク表示を一旦全削除
@@ -189,31 +161,3 @@ function cloneHtml(task) {
   newElement.setAttribute('data-id', task.id);
   return newElement;
 }
-
-
-//タスク完了時にリストにいるタスクを移動させる関数
-//function refreshList() {
-
-  // 完了・削除処理の際は既存のリストを初期化
-  // document.querySelectorAll('ul li').forEach(el => el.remove());
-  
-
-  // 配列の数だけリスト要素を作成して挿入
-  // 新リスト要素のタスク名テキストを代入
-  // for (let task of tasks) {
-  //   newElement.querySelector('.list-name').textContent = task.name;
-  //   // 新リスト要素にdata-id属性（＝タスクIDと同一）を追加
-  //   newElement.setAttribute('data-id', task.id);
-  //   // リストdivにli要素を追加
-  //   if (task.isDone === false) {
-  //     console.log(`タスクのisDoneプロパティは${task.isDone}でした`)
-  //     listDiv.append(newElement);
-  //   }
-  //   else {
-  //     console.log(`タスクのisDoneプロパティは${task.isDone}でした`)
-  //     completedDiv.append(newElement);
-  //   }
-  // }
-
-  
-// }

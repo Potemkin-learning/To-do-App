@@ -40,27 +40,23 @@ form.addEventListener('submit', (event) => {
   }
 })
 
-// 完了チェックボックスが押された時の挙動を定義
-listDiv.addEventListener('change', event => {
-  if (event.target.checked) {
-    const checkedTask = getTaskById(event);
-    // そのオブジェクトのisDoneプロパティをtrueに変更する
-    checkedTask.isDone = true;
-    refreshHTML(); // HTMLの再描写
-    console.log(tasks, 'タスクを完了にしました'); // デバッグ用
-  }
-})
-
-// 完了チェックボックスが解除された時の挙動を定義
+// チェックボックスの状態が変更された時の挙動を定義
 list.addEventListener('change', event => {
   if (event.target.type === 'checkbox') {
-    if (!event.target.checked) {
+    // IDをもとにタスクオブジェクトを取得
+    const task = getTaskById(event);
+    // 完了チェックボックスがチェックされた時の挙動を定義
+    if (event.target.checked) {
+      // そのオブジェクトのisDoneプロパティをtrueに変更する
+      task.isDone = true;
+      console.log(tasks, 'タスクを完了にしました'); // デバッグ用
+    } else {
+      // 完了チェックボックスのチェックが解除された時の挙動を定義
       // 該当タスクのオブジェクトのisDoneプロパティをfalseに変更する
-      const uncheckedTask = getTaskById(event);
-      uncheckedTask.isDone = false;
+      task.isDone = false;
       console.log(tasks, 'タスクを未完了にしました'); // デバッグ用
-      refreshHTML(); // HTMLの再描写
     }
+    refreshHTML(); // HTMLの再描写
   }
 })
 

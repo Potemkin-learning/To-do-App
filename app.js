@@ -67,8 +67,8 @@ list.addEventListener('change', event => {
 // 削除ボタンが押された時の挙動を定義
 list.addEventListener('click', (event) => {
   if (event.target.className === "task-delete-button") {
-    // オブジェクトのインデックスは、IDから1を引いたもの
-    const deletionIndex = getTaskId(event) - 1;
+    // カスタムIDから、該当オブジェクトの配列内のindexを特定する
+    const deletionIndex = tasks.findIndex(task => task.id === getTaskId(event));
     // タスク配列から該当タスクを削除する
     tasks.splice(deletionIndex, 1);
     console.log(tasks, `タスクを削除しました`); // デバッグ用

@@ -167,12 +167,12 @@ function cloneHtml(task) {
 // タスクデータをlocalStorageに保存する関数
 function saveToLocalStorage() {
   const json = JSON.stringify(tasks);
-  localStorage.setItem("data", json);
+  localStorage.setItem("todoTasks", json);
 }
 
 // タスクデータをlocalStorageから読み込む関数
 function loadFromLocalStorage() {
-  const data = localStorage.getItem("data");
+  const data = localStorage.getItem("todoTasks");
 
   // localStorageのデータがNULLでなければ、配列tasksに再代入（上書き）
   if (data !== NULL) {
